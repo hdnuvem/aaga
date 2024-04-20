@@ -20,5 +20,4 @@ ports:
 
 # Use this to point to a Dockerfile which pre-installs any necessary tools
 # This Dockerfile should be crafted to include Docker itself if you plan to use it within the Gitpod environment
-image:
-  file: .gitpod.Dockerfile
+
