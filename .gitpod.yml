@@ -11,7 +11,7 @@ tasks:
         -v /var/run/docker.sock:/var/run/docker.sock \
         --restart=on-failure pufferpanel/pufferpanel:latest
       docker start pufferpanel
-      docker exec -i pufferpanel /pufferpanel/pufferpanel user add arthuzin 123@gmail.com 123456 123456
+      docker exec -i pufferpanel /bin/bash -c 'echo -e "arthuzin\n123@gmail.com\n123456\n123456\ny" | /pufferpanel/pufferpanel user add'
 
 ports:
   - port: 8080
