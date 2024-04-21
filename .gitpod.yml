@@ -14,12 +14,12 @@ tasks:
       docker start pufferpanel
       docker exec pufferpanel /pufferpanel/pufferpanel user add --name arthuzin --email 123@gmail.com --password 123456 --admin
 
-  - init: |
+  - git_init: |
       git init
       git add .
       git commit -m "Initial commit"
-      git remote add origin <https://github.com/hdnuvem/aaga>
-      git push -u origin master
+      git remote add origin https://github.com/hdnuvem/aaga
+      git push -u origin main
 
 ports:
   - port: 8080
