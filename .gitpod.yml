@@ -1,22 +1,27 @@
-image:
-  file: .gitpod.Dockerfile
-
 tasks:
   - init: |
-      sudo apt-get update && sudo apt-get upgrade -y
-      sudo apt-get install -y docker.io
-      sudo mkdir -p /var/lib/pufferpanel
-      sudo docker volume create pufferpanel-config
-      sudo docker create --name pufferpanel -p 8080:8080 -p 5657:5657 \
-        -v pufferpanel-config:/etc/pufferpanel \
-        -v /var/lib/pufferpanel:/var/lib/pufferpanel \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        --sysctl net.ipv6.conf.all.disable_ipv6=1 \  # Adiciona esta linha para desabilitar o IPv6
-        --restart=on-failure pufferpanel/pufferpanel:latest
-      sudo docker start pufferpanel
-      sleep 5  # Aguarda alguns segundos para garantir que o container esteja completamente iniciado
-      echo -e "arthuzin\n123@gmail.com\n123456\n123456\ny" | sudo docker exec -i pufferpanel /pufferpanel/pufferpanel user add
-    command: echo "PufferPanel is running, and user is set up."
+    apt update
+    apt upgrade
+    apt install -y sudo
+    mkdir -p /var/lib/pufferpanel
+    docker volume create pufferpanel-config
+    docker create --name pufferpanel -p 8080:8080 -p 5657:5657 \
+      -v pufferpanel-config:/etc/pufferpanel \
+      -v /var/lib/pufferpanel:/var/lib/pufferpanel \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      --restart=on-failure pufferpanel/pufferpanel:latest
+    docker start pufferpanel
+    sleep 5  # Aguarda alguns segundos para garantir que o container esteja completamente iniciado
+    docker exec -i pufferpanel /pufferpanel/pufferpanel user add << EOF
+    arthuzin
+    123@gmail.com
+    123456
+    123456
+    y
+    EOF
+  command: echo "PufferPanel is running, and user is set up."
+
+      
 
 ports:
   - port: 8080
