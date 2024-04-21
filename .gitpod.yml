@@ -1,20 +1,18 @@
-tasks:
-  - init: |
+- init: |
     apt update
     apt upgrade
     apt install -y sudo
     mkdir -p /var/lib/pufferpanel
     docker volume create pufferpanel-config
-    docker create --name pufferpanel -p 8080:8080 -p 5657:5657 -v pufferpanel-config:/etc/pufferpanel -v /var/lib/pufferpanel:/var/lib/pufferpanel -v /var/run/docker.sock:/var/run/docker.sock --restart=on-failure pufferpanel/pufferpanel:latest
+    docker create --name pufferpanel -p 8080:8080 -p 5657:5657 \
+      -v pufferpanel-config:/etc/pufferpanel \
+      -v /var/lib/pufferpanel:/var/lib/pufferpanel \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      --restart=on-failure pufferpanel/pufferpanel:latest
     docker start pufferpanel
-    docker exec -it pufferpanel /pufferpanel/pufferpanel user add
+    docker exec -i pufferpanel /pufferpanel/pufferpanel user add << EOF
     arthuzin
     123@gmail.com
     123456
     123456
-
-ports:
-  - port: 8080
-    onOpen: open-preview
-  - port: 5657
-    onOpen: ignore
+    EOF
