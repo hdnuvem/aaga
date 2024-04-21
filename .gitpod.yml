@@ -1,19 +1,18 @@
 tasks:
   - init: |
       apt update
-      apt upgrade
+      apt upgrade -y
       apt install -y sudo
+      groupadd -r pufferpanel || true
       mkdir -p /var/lib/pufferpanel
       docker volume create pufferpanel-config
       docker create --name pufferpanel -p 8080:8080 -p 5657:5657 \
         -v pufferpanel-config:/etc/pufferpanel \
         -v /var/lib/pufferpanel:/var/lib/pufferpanel \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        -e USERNAME=arthuzin \
-        -e EMAIL=123@gmail.com \
         --restart=on-failure pufferpanel/pufferpanel:latest
       docker start pufferpanel
-      docker exec pufferpanel /pufferpanel/pufferpanel user add $USERNAME $EMAIL 123456 123456 y
+      docker exec pufferpanel /pufferpanel/pufferpanel user add --name arthuzin --email 123@gmail.com --password 123456 --admin
 
 ports:
   - port: 8080
