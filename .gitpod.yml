@@ -14,7 +14,7 @@ tasks:
       docker start pufferpanel
       docker exec pufferpanel /pufferpanel/pufferpanel user add --name arthuzin --email 123@gmail.com --password 123456 --admin
 
-  - git_init: |
+  - init: |
       git init
       git add .
       git commit -m "Initial commit"
