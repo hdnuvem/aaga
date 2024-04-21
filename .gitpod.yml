@@ -1,5 +1,4 @@
-tasks:
-  - init: |
+- init: |
     apt update
     apt upgrade
     apt install -y sudo
@@ -12,19 +11,5 @@ tasks:
       --restart=on-failure pufferpanel/pufferpanel:latest
     docker start pufferpanel
     sleep 5  # Aguarda alguns segundos para garantir que o container esteja completamente iniciado
-    docker exec -i pufferpanel /pufferpanel/pufferpanel user add << EOF
-    arthuzin
-    123@gmail.com
-    123456
-    123456
-    y
-    EOF
+    echo -e "arthuzin\n123@gmail.com\n123456\n123456\ny" | docker exec -i pufferpanel /pufferpanel/pufferpanel user add
   command: echo "PufferPanel is running, and user is set up."
-
-      
-
-ports:
-  - port: 8080
-    onOpen: open-preview
-  - port: 5657
-    onOpen: ignore
