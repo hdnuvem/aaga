@@ -14,6 +14,14 @@ tasks:
       docker start pufferpanel
       docker exec pufferpanel /pufferpanel/pufferpanel user add --name arthuzin --email 123@gmail.com --password 123456 --admin
 
+    - git_init:
+        init: |
+          git init
+          git add .
+          git commit -m "Initial commit"
+          git remote add origin <URL_DO_SEU_REPOSITORIO>
+          git push -u origin master
+
 ports:
   - port: 8080
     onOpen: open-preview
